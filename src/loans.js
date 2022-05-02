@@ -1,10 +1,10 @@
 import utils from "./utils";
 
-const requests = [];
+const loans = [];
 
-const printRequests = () => {
-  let htmlString = "<h2>Requests</h2>";
-  htmlString += requests
+const printLoans = () => {
+  let htmlString = "<h2>Loans</h2>";
+  htmlString += loans
     .map(
       (req) => `
     <div class="card">
@@ -19,4 +19,4 @@ const printRequests = () => {
   utils.writeToDom("#root", htmlString);
 };
 
-export default { printRequests };
+export default { printLoans };
