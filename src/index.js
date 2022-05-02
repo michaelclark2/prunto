@@ -4,6 +4,7 @@ import "./styles.css";
 
 import req from "./requests";
 import loans from "./loans";
+import wallet from "./wallet";
 import utils from "./utils";
 
 const main = document.querySelector("#root");
@@ -31,4 +32,6 @@ document.querySelector("#about").addEventListener("click", (e) => {
   utils.writeToDom("#root", "<h2>About</h2>");
 });
 
-window.addEventListener("load", () => {});
+window.addEventListener("load", async () => {
+  await wallet.connectWallet();
+});

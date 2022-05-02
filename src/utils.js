@@ -8,4 +8,14 @@ const clearActiveNavlinks = () => {
     .forEach((navlink) => navlink.classList.remove("active"));
 };
 
-export default { writeToDom, clearActiveNavlinks };
+const showWallet = () => {
+  document.querySelector("#wallet span:first-child").classList.add("d-none");
+  document.querySelector("#balance").classList.remove("d-none");
+};
+
+const hideWallet = () => {
+  document.querySelector("#wallet span:first-child").classList.remove("d-none");
+  document.querySelector("#balance").classList.add("d-none");
+};
+
+export default { writeToDom, clearActiveNavlinks, showWallet, hideWallet };
