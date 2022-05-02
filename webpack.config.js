@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
   mode: "development",
@@ -18,9 +19,28 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ["buffer", "Buffer"],
+    }),
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+    }),
     new HtmlWebpackPlugin({
-      title: "Prunto",
       template: "src/index.html",
     }),
   ],
+  resolve: {
+    fallback: {
+      url: require.resolve("url/"),
+      os: require.resolve("os-browserify/"),
+      https: require.resolve("https-browserify"),
+      stream: require.resolve("stream-browserify"),
+      http: require.resolve("stream-http"),
+      crypto: require.resolve("crypto-browserify"),
+      assert: require.resolve("assert"),
+      buffer: require.resolve("buffer"),
+      fs: false,
+      net: false,
+    },
+  },
 };
