@@ -11,7 +11,8 @@
       <div class="container">
         <h1 class="navbar-brand">Prunto</h1>
         <button class="btn btn-outline-success order-lg-1" id="wallet">
-          Connect
+          <span>Connect</span>
+          <span class="d-none" id="balance">$0.00</span>
         </button>
         <button
           class="navbar-toggler"
@@ -24,12 +25,14 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a id="requests" class="nav-link">Requests</a>
+              <a href="#" id="requests" class="nav-link">Requests</a>
             </li>
             <li class="nav-item">
-              <a id="loans" class="nav-link">Loans</a>
+              <a href="#" id="loans" class="nav-link">Loans</a>
             </li>
-            <li class="nav-item"><a id="about" class="nav-link">About</a></li>
+            <li class="nav-item">
+              <a href="#" id="about" class="nav-link">About</a>
+            </li>
           </ul>
         </div>
       </div>
