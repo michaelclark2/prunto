@@ -2,9 +2,9 @@
 
 ## Description
 
-A dApp to send requests for money to your friends that they intend to pay later.
+A dApp built on [Celo](https://www.celo.org) to send requests for money to your friends that you intend to pay back later.
 
-The lender can request the borrower pay an interest rate, or to pay it back later interest-free.
+The lender can request the borrower pay an interest rate, or to pay the loan back interest-free.
 
 A borrower can only have one active loan.
 
