@@ -2,6 +2,31 @@
 
 pragma solidity >=0.8.0 <0.9.0;
 
+interface IERC20Token {
+    function transfer(address, uint256) external returns (bool);
+
+    function approve(address, uint256) external returns (bool);
+
+    function transferFrom(
+        address,
+        address,
+        uint256
+    ) external returns (bool);
+
+    function totalSupply() external view returns (uint256);
+
+    function balanceOf(address) external view returns (uint256);
+
+    function allowance(address, address) external view returns (uint256);
+
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
+}
+
 contract Prunto {
     address internal cUsdTokenAddress =
         0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
@@ -53,13 +78,21 @@ contract Prunto {
         return (req.requester, req.amount, req.memo, req.accepted, req.denied);
     }
 
-    function acceptRequest(uint256 _id) public {
-        Request storage req = requests[msg.sender][_id];
-        require(!req.accepted, "Request is already accepted.");
-        require(!req.denied, "Request is already denied.");
-        // todo actually pay requestor
-        loans[req.requester] = Loan(payable(msg.sender), req.amount);
-        req.accepted = true;
+    function acceptRequest(uint256 _id) public payable {
+        Request storage request = requests[msg.sender][_id];
+        require(!request.accepted, "Request is already accepted.");
+        require(!request.denied, "Request is already denied.");
+        require(
+            IERC20Token(cUsdTokenAddress).transferFrom(
+                msg.sender,
+                request.requester,
+                request.amount
+            ),
+            "Transfer failed"
+        );
+
+        loans[request.requester] = Loan(payable(msg.sender), request.amount);
+        request.accepted = true;
     }
 
     function denyRequest(uint256 _id) public {
