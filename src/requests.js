@@ -1,6 +1,31 @@
 import utils from "./utils";
+import wallet from "./wallet";
 
-const requests = [];
+let requests = [];
+
+const getLoanRequests = async () => {
+  const _loanRequestsLength = await wallet
+    .getContract()
+    .methods.getRequestsLength()
+    .call();
+  const _loanRequests = [];
+  for (let i = 0; i < _loanRequestsLength; i++) {
+    let _loanRequest = new Promise(async (resolve, reject) => {
+      let loanRequest = await contract.methods.getRequest(i).call();
+      resolve({
+        index: i,
+        requestor: loanRequest[0],
+        amount: loanRequest[1],
+        memo: loanRequest[2],
+        accepted: loanRequest[3],
+        denied: loanRequest[4],
+      });
+    });
+    _loanRequests.push(_loanRequest);
+  }
+  requests = await Promise.all(_loanRequests);
+  printRequests();
+};
 
 const printRequests = () => {
   let htmlString = "<h2>Requests</h2>";
@@ -19,4 +44,11 @@ const printRequests = () => {
   utils.writeToDom("#root", htmlString);
 };
 
-export default { printRequests };
+document.querySelector("#requests").addEventListener("click", async (e) => {
+  e.preventDefault();
+  utils.clearActiveNavlinks();
+  e.target.classList.add("active");
+  await getLoanRequests();
+});
+
+export default { printRequests, getLoanRequests };
