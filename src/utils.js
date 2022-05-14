@@ -18,4 +18,14 @@ const hideWallet = () => {
   document.querySelector("#balance").classList.add("d-none");
 };
 
-export default { writeToDom, clearActiveNavlinks, showWallet, hideWallet };
+const truncAddress = (address) => {
+  return address.substring(0, 6) + "..." + address.slice(-4);
+};
+
+export default {
+  writeToDom,
+  clearActiveNavlinks,
+  showWallet,
+  hideWallet,
+  truncAddress,
+};
