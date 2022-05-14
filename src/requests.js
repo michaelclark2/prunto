@@ -12,7 +12,7 @@ const getLoanRequests = async () => {
       let loanRequest = await contract.methods.getRequest(i).call();
       resolve({
         index: i,
-        requestor: loanRequest[0],
+        requester: loanRequest[0],
         amount: loanRequest[1],
         memo: loanRequest[2],
         accepted: loanRequest[3],
@@ -30,11 +30,18 @@ const printRequests = () => {
   htmlString += requests
     .map(
       (req) => `
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Request</h5>
-            <p class="card-text">${req.memo}</p>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header">
+          Request from ${utils.truncAddress(req.requester)}
         </div>
+        <div class="card-body">
+          <h5 class="card-title">$${req.amount} cUSD</h5>
+          <p class="card-text">${req.memo}</p>
+          <a href="#" class="btn btn-success">Send $${req.amount} cUSD</a>
+          <a href="#" class="btn btn-danger">Deny</a>
+        </div>
+      </div>
     </div>
     `
     )
