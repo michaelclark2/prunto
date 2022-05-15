@@ -30,6 +30,22 @@ interface IERC20Token {
 contract Prunto {
     address internal cUsdTokenAddress =
         0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
+    mapping(address => Request[]) internal requests;
+    mapping(address => Loan) internal loans;
+
+    constructor() {
+        // add request to contract creator for testing
+        requests[msg.sender].push(
+            Request(
+                payable(0x7a5eDc46915265e1638f7c47c51Cc7cc2a779ab8),
+                5,
+                "i got five on it",
+                false,
+                false
+            )
+        );
+    }
+
     struct Request {
         address payable requester;
         uint256 amount;
@@ -45,9 +61,6 @@ contract Prunto {
         // term_length
         // start_timestamp
     }
-
-    mapping(address => Request[]) internal requests;
-    mapping(address => Loan) internal loans;
 
     function sendRequest(
         address _target,
@@ -83,6 +96,10 @@ contract Prunto {
         require(!request.accepted, "Request is already accepted.");
         require(!request.denied, "Request is already denied.");
         require(
+            loans[request.requester].issuer == address(0),
+            "Requestor currently has an active loan"
+        );
+        require(
             IERC20Token(cUsdTokenAddress).transferFrom(
                 msg.sender,
                 request.requester,
@@ -106,5 +123,8 @@ contract Prunto {
         return loans[msg.sender];
     }
 
-    //todo makepayment
+    // TODO: validate balances before accepting/paying
+    // function makePayment()
+    // function clearRequests()
+    // function clearLoan()
 }
