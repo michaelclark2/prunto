@@ -4,7 +4,7 @@ import utils from "./utils";
 import pruntoAbi from "../contracts/prunto.abi.json";
 
 const ERC20_DECIMALS = 18;
-const PruntoContractAddress = "0x7BA7cA7125a12465fFC17f01513c6b18AF4dA6d4";
+const PruntoContractAddress = "0x644eaF572Cffc97a795CACC7F22FeB9308fC5fA0";
 
 let kit;
 let contract;
