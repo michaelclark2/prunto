@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js";
+
 import utils from "./utils";
 import wallet from "./wallet";
 
@@ -13,7 +15,7 @@ const getLoanRequests = async () => {
       resolve({
         index: i,
         requester: loanRequest[0],
-        amount: loanRequest[1],
+        amount: new BigNumber(loanRequest[1]),
         memo: loanRequest[2],
         accepted: loanRequest[3],
         denied: loanRequest[4],
@@ -26,7 +28,7 @@ const getLoanRequests = async () => {
 };
 
 const printRequests = () => {
-  let htmlString = "<h2>Requests</h2>";
+  let htmlString = "<h2>My Requests</h2>";
   htmlString += requests
     .map(
       (req) => `
