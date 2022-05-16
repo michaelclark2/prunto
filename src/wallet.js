@@ -2,14 +2,13 @@ import Web3 from "web3";
 import { newKitFromWeb3 } from "@celo/contractkit";
 import utils from "./utils";
 import pruntoAbi from "../contracts/prunto.abi.json";
-
-const ERC20_DECIMALS = 18;
-const PruntoContractAddress = "0x644eaF572Cffc97a795CACC7F22FeB9308fC5fA0";
+import { ERC20_DECIMALS, PruntoContractAddress } from "./constants";
 
 let kit;
 let contract;
 
 const getContract = () => contract;
+const getKit = () => kit;
 
 // TODO: handle disconnect
 
@@ -43,4 +42,4 @@ document.querySelector("#wallet").addEventListener("click", async (e) => {
   await connectWallet();
 });
 
-export default { connectWallet, getContract };
+export default { connectWallet, getContract, getKit };

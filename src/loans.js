@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 import utils from "./utils";
 import wallet from "./wallet";
+import { ERC20_DECIMALS } from "./constants";
 
 let loan = {};
 
@@ -51,16 +52,16 @@ const printLoan = () => {
           <p class="card-text">
             No active loan, send a request to start using Prunto!
           </p>
-          <form>
+          <form id="newLoanRequestForm">
             <div class="row">
               <div class="col-lg mb-2">
-                <input type="text" class="form-control" id="newLoanReqAddress" placeholder="Address">
+                <input type="text" class="form-control" id="address" placeholder="Address">
               </div>
               <div class="col-lg mb-2">
-                <input type="number" step="0.01" min=0 class="form-control" id="newLoanReqAmount" placeholder="Amount">
+                <input type="number" step="0.01" min=0 class="form-control" id="amount" placeholder="Amount">
               </div>
               <div class="col-lg mb-2">
-                <input type="text" class="form-control" id="newLoanReqMemo" placeholder="What is the loan for?">
+                <input type="text" class="form-control" id="memo" placeholder="What is the loan for?">
               </div>
             </div>
             <div class="row text-center">
@@ -72,17 +73,11 @@ const printLoan = () => {
         </div>
       </div>
     </div>
+
     `;
   }
   htmlString += "</div></div>";
   utils.writeToDom("#root", htmlString);
-};
-
-const printRequestForm = () => {
-  return `
-    <div>
-    </div>
-  `;
 };
 
 document.querySelector("#loans").addEventListener("click", (e) => {
@@ -90,6 +85,23 @@ document.querySelector("#loans").addEventListener("click", (e) => {
   utils.clearActiveNavlinks();
   e.target.classList.add("active");
   printLoan();
+});
+
+document.querySelector("#root").addEventListener("submit", async (e) => {
+  if (e.target.id === "newLoanRequestForm") {
+    e.preventDefault();
+    const form = e.target;
+    const newLoanRequestParams = [
+      form.address.value,
+      new BigNumber(form.amount.value).shiftedBy(ERC20_DECIMALS).toString(),
+      form.memo.value,
+    ];
+
+    const result = await wallet
+      .getContract()
+      .methods.sendRequest(...newLoanRequestParams)
+      .send({ from: wallet.getKit().defaultAccount });
+  }
 });
 
 export default { printLoan, getLoan };
