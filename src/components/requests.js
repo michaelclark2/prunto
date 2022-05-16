@@ -28,28 +28,49 @@ const getLoanRequests = async () => {
 };
 
 const printLoanRequests = () => {
-  let htmlString = "<h2>My Requests</h2>";
+  let htmlString = `<div class="row gy-2 gx-2-lg row-cols-1 row-cols-lg-4 justify-content-center-sm">`;
   htmlString += requests
+    .filter((req) => !req.denied && !req.accepted)
     .map(
       (req) => `
-    <div class="col-lg-8">
+    <div class="col">
       <div class="card">
-        <div class="card-header">
-          Request from ${utils.truncAddress(req.requester)}
-        </div>
+        <h6 class="card-header">Request from ${utils.truncAddress(req.requester)}</h6>
         <div class="card-body">
-          <h5 class="card-title">$${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</h5>
+          <p class="fs-2">$${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</p>
           <p class="card-text">${req.memo}</p>
-          <button class="btn btn-success">Send $${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</button>
+          <button id="req-${req.index}" class="btn btn-success acceptBtn">
+            Send $${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD
+          </button>
           <button class="btn btn-danger">Deny</button>
         </div>
       </div>
     </div>
     `
     )
-    .join();
+    .join("");
+  htmlString += "</div>";
   utils.writeToDom("#root", htmlString);
 };
+
+document.querySelector("#root").addEventListener("click", async (e) => {
+  if (e.target.classList.contains("acceptBtn")) {
+    const index = e.target.id.replace("req-", "");
+    const request = requests[index];
+    try {
+      await wallet.approve(request.amount);
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      await wallet.getContract().methods.acceptRequest(request.index).send({ from: wallet.getKit().defaultAccount });
+    } catch (error) {
+      console.error(error);
+    }
+    await getLoanRequests();
+    printLoanRequests();
+  }
+});
 
 document.querySelector("#requests").addEventListener("click", (e) => {
   e.preventDefault();
