@@ -39,8 +39,8 @@ const printLoanRequests = () => {
         <div class="card-body">
           <h5 class="card-title">$${req.amount} cUSD</h5>
           <p class="card-text">${req.memo}</p>
-          <a href="#" class="btn btn-success">Send $${req.amount} cUSD</a>
-          <a href="#" class="btn btn-danger">Deny</a>
+          <button class="btn btn-success">Send $${req.amount} cUSD</button>
+          <button class="btn btn-danger">Deny</button>
         </div>
       </div>
     </div>
