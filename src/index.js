@@ -22,4 +22,5 @@ window.addEventListener("load", async () => {
   await wallet.connectWallet();
   await req.getLoanRequests();
   await loans.getLoan();
+  utils.notificationOff();
 });

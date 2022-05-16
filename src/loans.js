@@ -64,11 +64,12 @@ const printLoan = () => {
                 <input type="text" class="form-control" id="memo" placeholder="What is the loan for?">
               </div>
             </div>
-            <div class="row text-center">
+            <div class="row text-center mb-2">
               <div class="col">
                 <button class="btn btn-success" id="sendLoanRequest">Send Request</button>
               </div>
             </div>
+            <div class="alert alert-danger"></div>
           </form>
         </div>
       </div>
@@ -78,6 +79,12 @@ const printLoan = () => {
   }
   htmlString += "</div></div>";
   utils.writeToDom("#root", htmlString);
+  utils.notificationOff();
+};
+
+const errorNotification = (message) => {
+  utils.notificationOn();
+  utils.writeToDom("#newLoanRequestForm .alert", message);
 };
 
 document.querySelector("#loans").addEventListener("click", (e) => {
@@ -96,11 +103,14 @@ document.querySelector("#root").addEventListener("submit", async (e) => {
       new BigNumber(form.amount.value).shiftedBy(ERC20_DECIMALS).toString(),
       form.memo.value,
     ];
-
-    const result = await wallet
-      .getContract()
-      .methods.sendRequest(...newLoanRequestParams)
-      .send({ from: wallet.getKit().defaultAccount });
+    try {
+      const result = await wallet
+        .getContract()
+        .methods.sendRequest(...newLoanRequestParams)
+        .send({ from: wallet.getKit().defaultAccount });
+    } catch (error) {
+      errorNotification(error);
+    }
   }
 });
 
