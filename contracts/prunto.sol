@@ -38,7 +38,7 @@ contract Prunto {
         requests[msg.sender].push(
             Request(
                 payable(0x7a5eDc46915265e1638f7c47c51Cc7cc2a779ab8),
-                5,
+                5000000000000000000,
                 "i got five on it",
                 false,
                 false
