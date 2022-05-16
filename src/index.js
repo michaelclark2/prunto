@@ -10,13 +10,6 @@ const main = document.querySelector("#root");
 
 main.innerHTML = "<h1>Welcome to Prunto</h1>";
 
-document.querySelector("#loans").addEventListener("click", (e) => {
-  e.preventDefault();
-  utils.clearActiveNavlinks();
-  e.target.classList.add("active");
-  loans.printLoans();
-});
-
 document.querySelector("#about").addEventListener("click", (e) => {
   e.preventDefault();
   utils.clearActiveNavlinks();
