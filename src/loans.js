@@ -18,7 +18,7 @@ const getLoan = async () => {
 
 const printLoan = () => {
   let htmlString = "<h2>My Loan</h2>";
-  if (loan.hasOwnProperty("issuer")) {
+  if (loan.issuer && !utils.isEmptyAddress(loan.issuer)) {
     htmlString += `
       <div class="card">
           <div class="card-body">

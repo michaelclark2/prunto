@@ -22,10 +22,13 @@ const truncAddress = (address) => {
   return address.substring(0, 6) + "..." + address.slice(-4);
 };
 
+const isEmptyAddress = (address) => address === "0x".padEnd(42, "0");
+
 export default {
   writeToDom,
   clearActiveNavlinks,
   showWallet,
   hideWallet,
   truncAddress,
+  isEmptyAddress,
 };
