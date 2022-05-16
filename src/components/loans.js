@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
-import utils from "./utils";
+import utils from "../helpers/utils";
 import wallet from "./wallet";
-import { ERC20_DECIMALS } from "./constants";
+import { ERC20_DECIMALS } from "../helpers/constants";
 
 let loan = {};
 

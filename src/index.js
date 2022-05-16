@@ -2,10 +2,10 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 
-import req from "./requests";
-import loans from "./loans";
-import wallet from "./wallet";
-import utils from "./utils";
+import req from "./components/requests";
+import loans from "./components/loans";
+import wallet from "./components/wallet";
+import utils from "./helpers/utils";
 
 const main = document.querySelector("#root");
 

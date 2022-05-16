@@ -1,8 +1,8 @@
 import Web3 from "web3";
 import { newKitFromWeb3 } from "@celo/contractkit";
-import utils from "./utils";
-import pruntoAbi from "../contracts/prunto.abi.json";
-import { ERC20_DECIMALS, PruntoContractAddress } from "./constants";
+import utils from "../helpers/utils";
+import pruntoAbi from "../../contracts/prunto.abi.json";
+import { ERC20_DECIMALS, PruntoContractAddress } from "../helpers/constants";
 
 let kit;
 let contract;

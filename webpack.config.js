@@ -26,7 +26,7 @@ module.exports = {
       process: "process/browser",
     }),
     new HtmlWebpackPlugin({
-      template: "src/index.html",
+      template: "public/index.html",
     }),
   ],
   resolve: {
