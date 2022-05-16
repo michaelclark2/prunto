@@ -28,16 +28,16 @@ const getLoanRequests = async () => {
 };
 
 const printLoanRequests = () => {
-  let htmlString = `<div class="row row-col-3 justify-content-center">`;
+  let htmlString = `<div class="row gy-2 gx-2-lg row-cols-1 row-cols-lg-4 justify-content-center-sm">`;
   htmlString += requests
     .filter((req) => !req.denied && !req.accepted)
     .map(
       (req) => `
-    <div class="col-lg-8">
+    <div class="col">
       <div class="card">
         <h6 class="card-header">Request from ${utils.truncAddress(req.requester)}</h6>
         <div class="card-body">
-          <p class="fs-1">$${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</p>
+          <p class="fs-2">$${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</p>
           <p class="card-text">${req.memo}</p>
           <button id="req-${req.index}" class="btn btn-success acceptBtn">
             Send $${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD
@@ -48,7 +48,7 @@ const printLoanRequests = () => {
     </div>
     `
     )
-    .join();
+    .join("");
   htmlString += "</div>";
   utils.writeToDom("#root", htmlString);
 };
