@@ -10,9 +10,9 @@ const getLoan = async () => {
   const _loan = new Promise(async (resolve, reject) => {
     const loan = await contract.methods.getLoan().call();
     resolve({
-      issuer: loan[0],
-      amount: new BigNumber(loan[1]),
-      balance: new BigNumber(loan[2]),
+      issuer: loan.issuer,
+      amount: new BigNumber(loan.amount),
+      balance: new BigNumber(loan.balance),
     });
   });
   loan = await _loan;
@@ -29,12 +29,12 @@ const printLoan = () => {
           <div class="card-body">
             <div class="row mb-2">
               <div class="col">
-                <h5 class="card-title">$${loan.amount}</h5>
+                <h5 class="card-title">$${loan.amount.shiftedBy(-ERC20_DECIMALS)}</h5>
                 <p class="card-text">Loan Amount</p>
                 <button class="btn btn-success">Pay in full</button>
               </div>
               <div class="col">
-                <h5 class="card-title">$${loan.balance}</h5>
+                <h5 class="card-title">$${loan.balance.shiftedBy(-ERC20_DECIMALS)}</h5>
                 <p class="card-text">Current balance</p>
                 <button class="btn btn-success">Make payment</button>
               </div>

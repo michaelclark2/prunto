@@ -1,5 +1,10 @@
 [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -39,6 +44,11 @@
 					{
 						"internalType": "uint256",
 						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balance",
 						"type": "uint256"
 					}
 				],
