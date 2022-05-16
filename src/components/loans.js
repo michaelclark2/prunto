@@ -111,6 +111,8 @@ document.querySelector("#root").addEventListener("submit", async (e) => {
     } catch (error) {
       errorNotification(error);
     }
+    await getLoan();
+    printLoan();
   }
 });
 
