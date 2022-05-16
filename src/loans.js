@@ -48,7 +48,27 @@ const printLoan = () => {
         Send Request
       </div>
         <div class="card-body">
-          No active loan, send request
+          <p class="card-text">
+            No active loan, send a request to start using Prunto!
+          </p>
+          <form>
+            <div class="row">
+              <div class="col-lg mb-2">
+                <input type="text" class="form-control" id="newLoanReqAddress" placeholder="Address">
+              </div>
+              <div class="col-lg mb-2">
+                <input type="number" step="0.01" min=0 class="form-control" id="newLoanReqAmount" placeholder="Amount">
+              </div>
+              <div class="col-lg mb-2">
+                <input type="text" class="form-control" id="newLoanReqMemo" placeholder="What is the loan for?">
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col">
+                <button class="btn btn-success" id="sendLoanRequest">Send Request</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
