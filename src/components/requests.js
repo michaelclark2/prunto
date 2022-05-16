@@ -30,6 +30,7 @@ const getLoanRequests = async () => {
 const printLoanRequests = () => {
   let htmlString = "<h2>My Requests</h2>";
   htmlString += requests
+    .filter((req) => !req.denied && !req.accepted)
     .map(
       (req) => `
     <div class="col-lg-8">
@@ -40,7 +41,9 @@ const printLoanRequests = () => {
         <div class="card-body">
           <h5 class="card-title">$${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</h5>
           <p class="card-text">${req.memo}</p>
-          <button class="btn btn-success">Send $${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</button>
+          <button id="req-${req.index}" class="btn btn-success acceptBtn">
+            Send $${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD
+          </button>
           <button class="btn btn-danger">Deny</button>
         </div>
       </div>
@@ -50,6 +53,25 @@ const printLoanRequests = () => {
     .join();
   utils.writeToDom("#root", htmlString);
 };
+
+document.querySelector("#root").addEventListener("click", async (e) => {
+  if (e.target.classList.contains("acceptBtn")) {
+    const index = e.target.id.replace("req-", "");
+    const request = requests[index];
+    try {
+      await wallet.approve(request.amount);
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      await wallet.getContract().methods.acceptRequest(request.index).send({ from: wallet.getKit().defaultAccount });
+    } catch (error) {
+      console.error(error);
+    }
+    await getLoanRequests();
+    printLoanRequests();
+  }
+});
 
 document.querySelector("#requests").addEventListener("click", (e) => {
   e.preventDefault();
