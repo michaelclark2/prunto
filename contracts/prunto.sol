@@ -57,6 +57,7 @@ contract Prunto {
     struct Loan {
         address payable issuer;
         uint256 amount;
+        uint256 balance;
         // interest_rate
         // term_length
         // start_timestamp
@@ -97,7 +98,7 @@ contract Prunto {
         require(!request.denied, "Request is already denied.");
         require(
             loans[request.requester].issuer == address(0),
-            "Requestor currently has an active loan"
+            "Requester currently has an active loan"
         );
         require(
             IERC20Token(cUsdTokenAddress).transferFrom(
@@ -108,7 +109,11 @@ contract Prunto {
             "Transfer failed"
         );
 
-        loans[request.requester] = Loan(payable(msg.sender), request.amount);
+        loans[request.requester] = Loan(
+            payable(msg.sender),
+            request.amount,
+            request.amount
+        );
         request.accepted = true;
     }
 

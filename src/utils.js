@@ -3,9 +3,7 @@ const writeToDom = (id, htmlString) => {
 };
 
 const clearActiveNavlinks = () => {
-  document
-    .querySelectorAll(".nav-link.active")
-    .forEach((navlink) => navlink.classList.remove("active"));
+  document.querySelectorAll(".nav-link.active").forEach((navlink) => navlink.classList.remove("active"));
 };
 
 const showWallet = () => {
@@ -22,10 +20,22 @@ const truncAddress = (address) => {
   return address.substring(0, 6) + "..." + address.slice(-4);
 };
 
+const isEmptyAddress = (address) => address === "0x".padEnd(42, "0");
+
+const notificationOff = () => {
+  document.querySelector(".alert").style.display = "none";
+};
+const notificationOn = () => {
+  document.querySelector(".alert").style.display = "block";
+};
+
 export default {
   writeToDom,
   clearActiveNavlinks,
   showWallet,
   hideWallet,
   truncAddress,
+  isEmptyAddress,
+  notificationOff,
+  notificationOn,
 };

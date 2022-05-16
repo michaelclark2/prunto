@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import { ERC20_DECIMALS } from "./constants";
 
 import utils from "./utils";
 import wallet from "./wallet";
@@ -24,10 +25,9 @@ const getLoanRequests = async () => {
     _loanRequests.push(_loanRequest);
   }
   requests = await Promise.all(_loanRequests);
-  printRequests();
 };
 
-const printRequests = () => {
+const printLoanRequests = () => {
   let htmlString = "<h2>My Requests</h2>";
   htmlString += requests
     .map(
@@ -38,10 +38,10 @@ const printRequests = () => {
           Request from ${utils.truncAddress(req.requester)}
         </div>
         <div class="card-body">
-          <h5 class="card-title">$${req.amount} cUSD</h5>
+          <h5 class="card-title">$${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</h5>
           <p class="card-text">${req.memo}</p>
-          <a href="#" class="btn btn-success">Send $${req.amount} cUSD</a>
-          <a href="#" class="btn btn-danger">Deny</a>
+          <button class="btn btn-success">Send $${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD</button>
+          <button class="btn btn-danger">Deny</button>
         </div>
       </div>
     </div>
@@ -51,11 +51,11 @@ const printRequests = () => {
   utils.writeToDom("#root", htmlString);
 };
 
-document.querySelector("#requests").addEventListener("click", async (e) => {
+document.querySelector("#requests").addEventListener("click", (e) => {
   e.preventDefault();
   utils.clearActiveNavlinks();
   e.target.classList.add("active");
-  await getLoanRequests();
+  printLoanRequests();
 });
 
-export default { printRequests, getLoanRequests };
+export default { printLoanRequests, getLoanRequests };
