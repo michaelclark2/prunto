@@ -11,26 +11,58 @@ const getLoan = async () => {
     resolve({
       issuer: loan[0],
       amount: new BigNumber(loan[1]),
+      balance: new BigNumber(loan[2]),
     });
   });
   loan = await _loan;
 };
 
 const printLoan = () => {
-  let htmlString = "<h2>My Loan</h2>";
-  if (loan.hasOwnProperty("issuer")) {
+  let htmlString = `<div class="row justify-content-center"><div class="col-lg-8">`;
+  if (loan.issuer && !utils.isEmptyAddress(loan.issuer)) {
     htmlString += `
-      <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">Active Loan</h5>
-              <p class="card-text">${loan.issuer}</p>
+        <div class="card">
+          <div class="card-header">
+            Active loan from ${utils.truncAddress(loan.issuer)}
           </div>
-      </div>
-      `;
+          <div class="card-body">
+            <div class="row mb-2">
+              <div class="col">
+                <h5 class="card-title">$${loan.amount}</h5>
+                <p class="card-text">Loan Amount</p>
+                <button class="btn btn-success">Pay in full</button>
+              </div>
+              <div class="col">
+                <h5 class="card-title">$${loan.balance}</h5>
+                <p class="card-text">Current balance</p>
+                <button class="btn btn-success">Make payment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
   } else {
-    htmlString += `no active loan, click here to send a request`;
+    htmlString += `
+    <div class="card">
+      <div class="card-header">
+        Send Request
+      </div>
+        <div class="card-body">
+          No active loan, send request
+        </div>
+      </div>
+    </div>
+    `;
   }
+  htmlString += "</div></div>";
   utils.writeToDom("#root", htmlString);
+};
+
+const printRequestForm = () => {
+  return `
+    <div>
+    </div>
+  `;
 };
 
 document.querySelector("#loans").addEventListener("click", (e) => {
