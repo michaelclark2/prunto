@@ -14,7 +14,6 @@ const getLoan = async () => {
     });
   });
   loan = await _loan;
-  printLoan();
 };
 
 const printLoan = () => {
@@ -34,11 +33,11 @@ const printLoan = () => {
   utils.writeToDom("#root", htmlString);
 };
 
-document.querySelector("#loans").addEventListener("click", async (e) => {
+document.querySelector("#loans").addEventListener("click", (e) => {
   e.preventDefault();
   utils.clearActiveNavlinks();
   e.target.classList.add("active");
-  await getLoan();
+  printLoan();
 });
 
 export default { printLoan, getLoan };

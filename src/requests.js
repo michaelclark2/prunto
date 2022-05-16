@@ -24,10 +24,9 @@ const getLoanRequests = async () => {
     _loanRequests.push(_loanRequest);
   }
   requests = await Promise.all(_loanRequests);
-  printRequests();
 };
 
-const printRequests = () => {
+const printLoanRequests = () => {
   let htmlString = "<h2>My Requests</h2>";
   htmlString += requests
     .map(
@@ -51,11 +50,11 @@ const printRequests = () => {
   utils.writeToDom("#root", htmlString);
 };
 
-document.querySelector("#requests").addEventListener("click", async (e) => {
+document.querySelector("#requests").addEventListener("click", (e) => {
   e.preventDefault();
   utils.clearActiveNavlinks();
   e.target.classList.add("active");
-  await getLoanRequests();
+  printLoanRequests();
 });
 
-export default { printRequests, getLoanRequests };
+export default { printLoanRequests, getLoanRequests };

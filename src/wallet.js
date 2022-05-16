@@ -43,8 +43,4 @@ document.querySelector("#wallet").addEventListener("click", async (e) => {
   await connectWallet();
 });
 
-window.addEventListener("load", async () => {
-  await connectWallet();
-});
-
 export default { connectWallet, getContract };
