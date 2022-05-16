@@ -23,9 +23,7 @@ const printLoan = () => {
   if (loan.issuer && !utils.isEmptyAddress(loan.issuer)) {
     htmlString += `
         <div class="card">
-          <div class="card-header">
-            Active loan from ${utils.truncAddress(loan.issuer)}
-          </div>
+          <h6 class="card-header">Active loan from ${utils.truncAddress(loan.issuer)}</h6>
           <div class="card-body">
             <div class="row mb-2">
               <div class="col">
