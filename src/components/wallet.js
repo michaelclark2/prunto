@@ -46,4 +46,4 @@ const getBalance = async () => {
   document.querySelector("#balance").textContent = `$${cUSDBalance} cUSD`;
 };
 
-export default { connectWallet, getContract, getKit, approve };
+export default { connectWallet, getContract, getKit, getBalance, approve };

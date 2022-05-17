@@ -29,12 +29,12 @@ const printLoan = () => {
               <div class="col">
                 <h5 class="card-title">$${loan.amount.shiftedBy(-ERC20_DECIMALS)}</h5>
                 <p class="card-text">Loan Amount</p>
-                <button class="btn btn-success">Pay in full</button>
+                <button id="payRemainingBalanceBtn" class="btn btn-success">Pay in full</button>
               </div>
               <div class="col">
                 <h5 class="card-title">$${loan.balance.shiftedBy(-ERC20_DECIMALS)}</h5>
                 <p class="card-text">Current balance</p>
-                <button class="btn btn-success">Make payment</button>
+                <button id="makePaymentBtn" class="btn btn-success">Make payment</button>
               </div>
             </div>
           </div>
@@ -90,6 +90,17 @@ document.querySelector("#loans").addEventListener("click", (e) => {
   utils.clearActiveNavlinks();
   e.target.classList.add("active");
   printLoan();
+});
+
+document.querySelector("#root").addEventListener("click", async (e) => {
+  e.preventDefault();
+  if (e.target.id === "payRemainingBalanceBtn") {
+    try {
+      await wallet.getContract().methods.payRemainingBalance().call({ from: wallet.getKit().defaultAccount });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 });
 
 document.querySelector("#root").addEventListener("submit", async (e) => {
