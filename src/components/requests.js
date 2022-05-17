@@ -58,15 +58,18 @@ document.querySelector("#root").addEventListener("click", async (e) => {
     const index = e.target.id.replace("req-", "");
     const request = requests[index];
     try {
+      e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Approving`;
       await wallet.approve(request.amount);
     } catch (error) {
       console.error(error);
     }
     try {
+      e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Confirming`;
       await wallet.getContract().methods.acceptRequest(request.index).send({ from: wallet.getKit().defaultAccount });
     } catch (error) {
       console.error(error);
     }
+    wallet.getBalance();
     await getLoanRequests();
     printLoanRequests();
   }
