@@ -42,7 +42,7 @@ const printLoanRequests = () => {
           <button id="req-${req.index}" class="btn btn-success acceptBtn">
             Send $${req.amount.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD
           </button>
-          <button class="btn btn-danger">Deny</button>
+          <button id="req-${req.index}" class="btn btn-danger denyBtn">Deny</button>
         </div>
       </div>
     </div>
@@ -64,6 +64,19 @@ document.querySelector("#root").addEventListener("click", async (e) => {
     }
     try {
       await wallet.getContract().methods.acceptRequest(request.index).send({ from: wallet.getKit().defaultAccount });
+    } catch (error) {
+      console.error(error);
+    }
+    await getLoanRequests();
+    printLoanRequests();
+  }
+
+  if (e.target.classList.contains("denyBtn")) {
+    const index = e.target.id.replace("req-", "");
+    const request = requests[index];
+
+    try {
+      await wallet.getContract().methods.denyRequest(request.index).send({ from: wallet.getKit().defaultAccount });
     } catch (error) {
       console.error(error);
     }
