@@ -13,7 +13,7 @@ const getKit = () => kit;
 
 // TODO: handle disconnect
 
-const connectWallet = async () => {
+const connectWallet = async (callback) => {
   if (window.celo) {
     try {
       const accounts = await window.celo.enable();
@@ -26,6 +26,9 @@ const connectWallet = async () => {
 
       utils.showWallet();
       getBalance();
+      if (callback) {
+        await callback();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -42,10 +45,5 @@ const getBalance = async () => {
   const cUSDBalance = totalBalance.cUSD.shiftedBy(-ERC20_DECIMALS).toFixed(2);
   document.querySelector("#balance").textContent = `$${cUSDBalance} cUSD`;
 };
-
-document.querySelector("#wallet").addEventListener("click", async (e) => {
-  e.preventDefault();
-  await connectWallet();
-});
 
 export default { connectWallet, getContract, getKit, approve };
