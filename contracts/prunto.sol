@@ -44,6 +44,14 @@ contract Prunto {
                 false
             )
         );
+
+        //add loan to contract creator for testing
+
+        loans[msg.sender] = Loan(
+            payable(0x7a5eDc46915265e1638f7c47c51Cc7cc2a779ab8),
+            5000000000000000000,
+            5000000000000000000
+        );
     }
 
     struct Request {
