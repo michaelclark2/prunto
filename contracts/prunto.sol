@@ -128,8 +128,44 @@ contract Prunto {
         return loans[msg.sender];
     }
 
-    // TODO: validate balances before accepting/paying
-    // function makePayment()
+    function makePayment(uint256 _amount) public payable {
+        require(loans[msg.sender].issuer != address(0), "No active loan.");
+
+        require(
+            loans[msg.sender].balance - _amount < 0,
+            "Amount more than active balance."
+        );
+        require(
+            IERC20Token(cUsdTokenAddress).transferFrom(
+                payable(msg.sender),
+                loans[msg.sender].issuer,
+                _amount
+            ),
+            "Transfer failed"
+        );
+        loans[msg.sender].balance - _amount;
+
+        if (loans[msg.sender].balance == 0) {
+            delete loans[msg.sender];
+        }
+    }
+
+    function payRemainingBalance() public payable {
+        require(loans[msg.sender].issuer != address(0), "No active loan.");
+        require(loans[msg.sender].balance > 0, "No remaining balance.");
+        require(
+            IERC20Token(cUsdTokenAddress).transferFrom(
+                payable(msg.sender),
+                loans[msg.sender].issuer,
+                loans[msg.sender].balance
+            ),
+            "Transfer failed"
+        );
+
+        loans[msg.sender].balance = 0;
+        delete loans[msg.sender];
+    }
+
     // function clearRequests()
     // function clearLoan()
 }
