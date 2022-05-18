@@ -120,6 +120,7 @@ const handleLoanPaymentClickEvents = async (e) => {
       document.querySelector("#loanReqMemo").value,
     ];
     try {
+      e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Confirming`;
       const result = await wallet
         .getContract()
         .methods.sendRequest(...newLoanRequestParams)
