@@ -22,10 +22,10 @@ const printLoan = () => {
   let htmlString = `<div class="row justify-content-center"><div class="col-lg-8">`;
   if (loan.issuer && !utils.isEmptyAddress(loan.issuer)) {
     htmlString += `
-        <div class="card">
+        <div class="card" id="loanView">
           <h6 class="card-header">Active loan from ${utils.truncAddress(loan.issuer)}</h6>
           <div class="card-body">
-            <div class="row mb-2">
+            <div class="row gy-4">
               <div class="col">
                 <h5 class="card-title">$${loan.amount.shiftedBy(-ERC20_DECIMALS)}</h5>
                 <p class="card-text">Loan Amount</p>
@@ -36,7 +36,9 @@ const printLoan = () => {
                 <p class="card-text">Current balance</p>
                 <button id="makePaymentBtn" class="btn btn-success">Make payment</button>
               </div>
-              <div class="alert alert-danger"></div>
+              <div class="col-12">
+                <div class="alert alert-danger" style="display:none;"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -80,8 +82,8 @@ const printLoan = () => {
 };
 
 const errorNotification = (message) => {
-  document.querySelector("#newLoanRequestForm .alert").style.display = "block";
-  document.querySelector("#newLoanRequestForm .alert").innerHTML = message;
+  document.querySelector(".alert").style.display = "block";
+  document.querySelector(".alert").innerHTML = message;
 };
 
 document.querySelector("#loans").addEventListener("click", (e) => {
@@ -98,14 +100,14 @@ const handleLoanPaymentClickEvents = async (e) => {
       e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Approving`;
       await wallet.approve(loan.balance);
     } catch (error) {
-      console.error(error);
+      errorNotification(error);
     }
 
     try {
       e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Confirming`;
       await wallet.getContract().methods.payRemainingBalance().send({ from: wallet.getKit().defaultAccount });
     } catch (error) {
-      console.error(error);
+      errorNotification(error);
     }
     wallet.getBalance();
     await getLoan();
