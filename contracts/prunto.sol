@@ -44,6 +44,14 @@ contract Prunto {
                 false
             )
         );
+
+        //add loan to contract creator for testing
+
+        loans[msg.sender] = Loan(
+            payable(0x7a5eDc46915265e1638f7c47c51Cc7cc2a779ab8),
+            5000000000000000000,
+            5000000000000000000
+        );
     }
 
     struct Request {
@@ -128,8 +136,44 @@ contract Prunto {
         return loans[msg.sender];
     }
 
-    // TODO: validate balances before accepting/paying
-    // function makePayment()
+    function makePayment(uint256 _amount) public payable {
+        require(loans[msg.sender].issuer != address(0), "No active loan.");
+
+        require(
+            loans[msg.sender].balance - _amount >= 0,
+            "Amount more than active balance."
+        );
+        require(
+            IERC20Token(cUsdTokenAddress).transferFrom(
+                payable(msg.sender),
+                loans[msg.sender].issuer,
+                _amount
+            ),
+            "Transfer failed"
+        );
+        loans[msg.sender].balance -= _amount;
+
+        if (loans[msg.sender].balance == 0) {
+            delete loans[msg.sender];
+        }
+    }
+
+    function payRemainingBalance() public payable {
+        require(loans[msg.sender].issuer != address(0), "No active loan.");
+        require(loans[msg.sender].balance > 0, "No remaining balance.");
+        require(
+            IERC20Token(cUsdTokenAddress).transferFrom(
+                payable(msg.sender),
+                loans[msg.sender].issuer,
+                loans[msg.sender].balance
+            ),
+            "Transfer failed"
+        );
+
+        loans[msg.sender].balance = 0;
+        delete loans[msg.sender];
+    }
+
     // function clearRequests()
     // function clearLoan()
 }

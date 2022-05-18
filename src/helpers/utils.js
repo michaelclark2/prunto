@@ -23,10 +23,17 @@ const truncAddress = (address) => {
 const isEmptyAddress = (address) => address === "0x".padEnd(42, "0");
 
 const notificationOff = () => {
-  document.querySelector(".alert").style.display = "none";
+  const alert = document.querySelector(".alert");
+  if (alert) {
+    alert.style.display = "none";
+  }
 };
+
 const notificationOn = () => {
-  document.querySelector(".alert").style.display = "block";
+  const alert = document.querySelector(".alert");
+  if (alert) {
+    alert.style.display = "block";
+  }
 };
 
 export default {
