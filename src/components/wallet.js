@@ -11,8 +11,6 @@ let contract;
 const getContract = () => contract;
 const getKit = () => kit;
 
-// TODO: handle disconnect
-
 const connectWallet = async (callback) => {
   if (window.celo) {
     try {

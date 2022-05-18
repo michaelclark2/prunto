@@ -28,6 +28,7 @@ const notificationOff = () => {
     alert.style.display = "none";
   }
 };
+
 const notificationOn = () => {
   const alert = document.querySelector(".alert");
   if (alert) {
