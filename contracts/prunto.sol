@@ -140,7 +140,7 @@ contract Prunto {
         require(loans[msg.sender].issuer != address(0), "No active loan.");
 
         require(
-            loans[msg.sender].balance - _amount > 0,
+            loans[msg.sender].balance - _amount >= 0,
             "Amount more than active balance."
         );
         require(

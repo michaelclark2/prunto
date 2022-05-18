@@ -37,7 +37,10 @@ const printLoan = () => {
               <div class="col-12">
                 <div class="input-group">
                   <span class="input-group-text">$</span>
-                  <input type="number" step="0.01" min=0 class="form-control" placeholder="0.00" />
+                  <input
+                    type="number" step="0.01" min=0 max=${loan.balance.shiftedBy(-ERC20_DECIMALS)}
+                    id="makePaymentAmount" class="form-control" placeholder="0.00"
+                  />
                   <button id="makePaymentBtn" class="btn btn-outline-success">Pay balance</button>
                   <button id="payRemainingBalanceBtn" class="btn btn-outline-success">Pay in full</button>
                 </div>
@@ -139,6 +142,29 @@ const handleLoanPaymentClickEvents = async (e) => {
     }
     await getLoan();
     printLoan();
+  }
+
+  if (e.target.id === "makePaymentBtn") {
+    e.preventDefault();
+    const paymentAmount = new BigNumber(document.querySelector("#makePaymentAmount").value)
+      .shiftedBy(ERC20_DECIMALS)
+      .toString();
+    try {
+      e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Approving`;
+      await wallet.approve(paymentAmount);
+    } catch (error) {
+      errorNotification(error);
+    }
+
+    try {
+      e.target.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Confirming`;
+      const result = await wallet
+        .getContract()
+        .methods.makePayment(paymentAmount)
+        .send({ from: wallet.getKit().defaultAccount });
+    } catch (error) {
+      errorNotification(error);
+    }
   }
 };
 
