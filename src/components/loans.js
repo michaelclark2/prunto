@@ -19,7 +19,7 @@ const getLoan = async () => {
 };
 
 const printLoan = () => {
-  let htmlString = `<div class="row justify-content-center"><div class="col-lg-8">`;
+  let htmlString = `<div class="row justify-content-center"><div class="col-lg-6">`;
   if (loan.issuer && !utils.isEmptyAddress(loan.issuer)) {
     htmlString += `
         <div class="card" id="loanView">
@@ -29,12 +29,18 @@ const printLoan = () => {
               <div class="col">
                 <h5 class="card-title">$${loan.amount.shiftedBy(-ERC20_DECIMALS)}</h5>
                 <p class="card-text">Loan Amount</p>
-                <button id="payRemainingBalanceBtn" class="btn btn-success">Pay in full</button>
               </div>
               <div class="col">
                 <h5 class="card-title">$${loan.balance.shiftedBy(-ERC20_DECIMALS)}</h5>
                 <p class="card-text">Current balance</p>
-                <button id="makePaymentBtn" class="btn btn-success">Make payment</button>
+              </div>
+              <div class="col-12">
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" step="0.01" min=0 class="form-control" placeholder="0.00" />
+                  <button id="makePaymentBtn" class="btn btn-outline-success">Pay balance</button>
+                  <button id="payRemainingBalanceBtn" class="btn btn-outline-success">Pay in full</button>
+                </div>
               </div>
               <div class="col-12">
                 <div class="alert alert-danger" style="display:none;"></div>
@@ -42,6 +48,7 @@ const printLoan = () => {
             </div>
           </div>
         </div>
+      </div>
         `;
   } else {
     htmlString += `
