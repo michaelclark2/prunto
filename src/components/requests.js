@@ -8,7 +8,12 @@ let requests = [];
 
 const getLoanRequests = async () => {
   const contract = wallet.getContract();
-  const _loanRequestsLength = await contract.methods.getRequestsLength().call();
+  let _loanRequestsLength = 0;
+  try {
+    const _loanRequestsLength = await contract.methods.getRequestsLength().call();
+  } catch (error) {
+    // suppressing error if user has no requests
+  }
   const _loanRequests = [];
   for (let i = 0; i < _loanRequestsLength; i++) {
     let _loanRequest = new Promise(async (resolve, reject) => {
@@ -49,6 +54,20 @@ const printLoanRequests = () => {
     `
     )
     .join("");
+  if (requests.length == 0) {
+    htmlString = `
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+        <div class="card">
+          <h6 class="card-header">No requests found</h6>
+          <div class="card-body">
+            <p class="card-text">No active requests, share your address with your friends so they may request payments.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
   htmlString += "</div>";
   utils.writeToDom("#root", htmlString);
 };
