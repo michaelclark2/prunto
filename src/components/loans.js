@@ -165,6 +165,9 @@ const handleLoanPaymentClickEvents = async (e) => {
     } catch (error) {
       errorNotification(error);
     }
+    wallet.getBalance();
+    await getLoan();
+    printLoan();
   }
 };
 
