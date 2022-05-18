@@ -29,6 +29,11 @@ document.querySelector("#wallet").addEventListener("click", async (e) => {
   await wallet.connectWallet(initData);
 });
 
+document.querySelector("#root").addEventListener("click", async (e) => {
+  await req.handleLoanRequestClickEvents(e);
+  await loans.handleLoanPaymentClickEvents(e);
+});
+
 window.addEventListener("load", async () => {
   await wallet.connectWallet(initData);
 });

@@ -53,7 +53,7 @@ const printLoanRequests = () => {
   utils.writeToDom("#root", htmlString);
 };
 
-document.querySelector("#root").addEventListener("click", async (e) => {
+const handleLoanRequestClickEvents = async (e) => {
   if (e.target.classList.contains("acceptBtn")) {
     const index = e.target.id.replace("req-", "");
     const request = requests[index];
@@ -86,7 +86,7 @@ document.querySelector("#root").addEventListener("click", async (e) => {
     await getLoanRequests();
     printLoanRequests();
   }
-});
+};
 
 document.querySelector("#requests").addEventListener("click", (e) => {
   e.preventDefault();
@@ -95,4 +95,4 @@ document.querySelector("#requests").addEventListener("click", (e) => {
   printLoanRequests();
 });
 
-export default { printLoanRequests, getLoanRequests };
+export default { printLoanRequests, getLoanRequests, handleLoanRequestClickEvents };
