@@ -140,7 +140,7 @@ contract Prunto {
         require(loans[msg.sender].issuer != address(0), "No active loan.");
 
         require(
-            loans[msg.sender].balance - _amount < 0,
+            loans[msg.sender].balance - _amount > 0,
             "Amount more than active balance."
         );
         require(
@@ -151,7 +151,7 @@ contract Prunto {
             ),
             "Transfer failed"
         );
-        loans[msg.sender].balance - _amount;
+        loans[msg.sender].balance -= _amount;
 
         if (loans[msg.sender].balance == 0) {
             delete loans[msg.sender];
