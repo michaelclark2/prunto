@@ -45,8 +45,8 @@ const printHomePage = () => {
 };
 
 const printAboutPage = () => {
-  let htmlString = `<h2 class="text-center">About</h2>`;
-  htmlString += `
+  const htmlString = `
+    <h2 class="text-center">About</h2>
     <div class="col-lg-6 mx-auto mb-2">
       <div class="card">
         <div class="card-body">
@@ -62,8 +62,8 @@ const printAboutPage = () => {
         <div class="card-body">
           <h4 class="card-title text-center">How do I borrow money?</h4>
           <p class="card-text">Send an address a request for payment.</p>
-          <p class="card-text">If the payment request is accepted, the funds will be transfered to your address and a loan will be created.</p>
-          <p class="card-text">While the user has an active loan, they are unable to request any further payments.</p>
+          <p class="card-text">If the payment request is accepted, the funds will be transfered to your wallet and a loan will be created.</p>
+          <p class="card-text">While your loan has a balance, you are unable to request any further payments.</p>
         </div>
       </div>
     </div>
@@ -72,7 +72,8 @@ const printAboutPage = () => {
         <div class="card-body">
           <h4 class="card-title text-center">How do I lend money?</h4>
           <p class="card-text">If you have an active request for payment, you can accept or deny the request.</p>
-          <p class="card-text">If the payment request is accepted, the funds will be transfered from your address and a loan will be created.</p>
+          <p class="card-text">If the payment request is accepted, the funds will be transfered from your wallet and a loan will be created.</p>
+          <p class="card-text">As the borrower makes payments to your loan, you will receive those payments directly in your wallet.</p>
         </div>
       </div>
     </div>
