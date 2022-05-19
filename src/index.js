@@ -112,6 +112,7 @@ document.querySelector("#root").addEventListener("click", async (e) => {
 });
 
 window.addEventListener("load", async () => {
+  document.body.style.display = "block";
   await wallet.connectWallet(initData);
   printHomePage();
 });
