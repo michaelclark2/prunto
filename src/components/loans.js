@@ -5,6 +5,8 @@ import { ERC20_DECIMALS } from "../helpers/constants";
 
 let loan = {};
 
+const getLoanDetail = () => loan;
+
 const getLoan = async () => {
   const contract = wallet.getContract();
   const _loan = new Promise(async (resolve, reject) => {
@@ -171,4 +173,4 @@ const handleLoanPaymentClickEvents = async (e) => {
   }
 };
 
-export default { printLoan, getLoan, handleLoanPaymentClickEvents };
+export default { printLoan, getLoan, handleLoanPaymentClickEvents, getLoanDetail };

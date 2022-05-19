@@ -6,6 +6,8 @@ import wallet from "./wallet";
 
 let requests = [];
 
+const getLoanRequestsLength = () => requests.length;
+
 const getLoanRequests = async () => {
   const contract = wallet.getContract();
   let _loanRequestsLength = 0;
@@ -114,4 +116,4 @@ document.querySelector("#requests").addEventListener("click", (e) => {
   printLoanRequests();
 });
 
-export default { printLoanRequests, getLoanRequests, handleLoanRequestClickEvents };
+export default { printLoanRequests, getLoanRequests, handleLoanRequestClickEvents, getLoanRequestsLength };
