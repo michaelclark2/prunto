@@ -8,7 +8,7 @@ import wallet from "./components/wallet";
 import utils from "./helpers/utils";
 import { ERC20_DECIMALS } from "./helpers/constants";
 
-const printHome = () => {
+const printHomePage = () => {
   let htmlString = "<h1 class='text-center'>Welcome to Prunto</h1>";
   if (window.celo && window.celo.isConnected()) {
     const address = wallet.getKit().defaultAccount;
@@ -44,6 +44,8 @@ const printHome = () => {
   utils.writeToDom("#root", htmlString);
 };
 
+const printAboutPage = () => {};
+
 const initData = async () => {
   await req.getLoanRequests();
   await loans.getLoan();
@@ -60,13 +62,13 @@ document.querySelector("#about").addEventListener("click", (e) => {
 document.querySelector("#homeLink").addEventListener("click", (e) => {
   e.preventDefault();
   utils.clearActiveNavlinks();
-  printHome();
+  printHomePage();
 });
 
 document.querySelector("#wallet").addEventListener("click", async (e) => {
   e.preventDefault();
   await wallet.connectWallet(initData);
-  printHome();
+  printHomePage();
 });
 
 document.querySelector("#root").addEventListener("click", async (e) => {
@@ -76,5 +78,5 @@ document.querySelector("#root").addEventListener("click", async (e) => {
 
 window.addEventListener("load", async () => {
   await wallet.connectWallet(initData);
-  printHome();
+  printHomePage();
 });
