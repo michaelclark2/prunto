@@ -44,7 +44,41 @@ const printHomePage = () => {
   utils.writeToDom("#root", htmlString);
 };
 
-const printAboutPage = () => {};
+const printAboutPage = () => {
+  let htmlString = `<h2 class="text-center">About</h2>`;
+  htmlString += `
+    <div class="col-lg-6 mx-auto mb-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">What is Prunto?</h4>
+          <p class="card-text">Prunto is intended to be used as a payment request and reimbursement platform.</p>
+          <p class="card-text">A user can request a payment from an address and respond to requests for payment from other users.  If a payment request is accepted, a loan is created to track reimbursements.</p>
+          <p class="card-text">While a user is currently borrowing from an address, they are unable to request any further payments until the original payment is reimbursed.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 mx-auto mb-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">How do I borrow money?</h4>
+          <p class="card-text">Send an address a request for payment.</p>
+          <p class="card-text">If the payment request is accepted, the funds will be transfered to your address and a loan will be created.</p>
+          <p class="card-text">While the user has an active loan, they are unable to request any further payments.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 mx-auto mb-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title text-center">How do I lend money?</h4>
+          <p class="card-text">If you have an active request for payment, you can accept or deny the request.</p>
+          <p class="card-text">If the payment request is accepted, the funds will be transfered from your address and a loan will be created.</p>
+        </div>
+      </div>
+    </div>
+  `;
+  utils.writeToDom("#root", htmlString);
+};
 
 const initData = async () => {
   await req.getLoanRequests();
@@ -56,7 +90,7 @@ document.querySelector("#about").addEventListener("click", (e) => {
   e.preventDefault();
   utils.clearActiveNavlinks();
   e.target.classList.add("active");
-  utils.writeToDom("#root", "<h2>About</h2>");
+  printAboutPage();
 });
 
 document.querySelector("#homeLink").addEventListener("click", (e) => {
