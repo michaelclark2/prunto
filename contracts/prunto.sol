@@ -64,19 +64,8 @@ contract Prunto {
         return requests[msg.sender].length;
     }
 
-    function getRequest(uint256 _id)
-        public
-        view
-        returns (
-            address,
-            uint256,
-            string memory,
-            bool,
-            bool
-        )
-    {
-        Request storage req = requests[msg.sender][_id];
-        return (req.requester, req.amount, req.memo, req.accepted, req.denied);
+    function getRequest(uint256 _id) public view returns (Request memory) {
+        return requests[msg.sender][_id];
     }
 
     function acceptRequest(uint256 _id) public payable {

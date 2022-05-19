@@ -10,7 +10,7 @@ const getLoanRequests = async () => {
   const contract = wallet.getContract();
   let _loanRequestsLength = 0;
   try {
-    const _loanRequestsLength = await contract.methods.getRequestsLength().call();
+    _loanRequestsLength = await contract.methods.getRequestsLength().call();
   } catch (error) {
     // suppressing error if user has no requests
   }
@@ -20,11 +20,11 @@ const getLoanRequests = async () => {
       let loanRequest = await contract.methods.getRequest(i).call();
       resolve({
         index: i,
-        requester: loanRequest[0],
-        amount: new BigNumber(loanRequest[1]),
-        memo: loanRequest[2],
-        accepted: loanRequest[3],
-        denied: loanRequest[4],
+        requester: loanRequest.requester,
+        amount: new BigNumber(loanRequest.amount),
+        memo: loanRequest.memo,
+        accepted: loanRequest.accepted,
+        denied: loanRequest.denied,
       });
     });
     _loanRequests.push(_loanRequest);
