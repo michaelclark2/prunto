@@ -33,27 +33,6 @@ contract Prunto {
     mapping(address => Request[]) internal requests;
     mapping(address => Loan) internal loans;
 
-    constructor() {
-        // add request to contract creator for testing
-        requests[msg.sender].push(
-            Request(
-                payable(0x7a5eDc46915265e1638f7c47c51Cc7cc2a779ab8),
-                5000000000000000000,
-                "i got five on it",
-                false,
-                false
-            )
-        );
-
-        //add loan to contract creator for testing
-
-        loans[msg.sender] = Loan(
-            payable(0x7a5eDc46915265e1638f7c47c51Cc7cc2a779ab8),
-            5000000000000000000,
-            5000000000000000000
-        );
-    }
-
     struct Request {
         address payable requester;
         uint256 amount;
@@ -174,6 +153,5 @@ contract Prunto {
         delete loans[msg.sender];
     }
 
-    // function clearRequests()
-    // function clearLoan()
+    // todo: function clearRequests()
 }
