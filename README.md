@@ -45,6 +45,7 @@ View dApp: https://fabulous-basbousa-dab8cb.netlify.app/
 
 ## Future developments
 
+- Connect with other wallets
 - Add the ability for lenders to charge interest
 - Request other tokens as payments
 - View sent requests
