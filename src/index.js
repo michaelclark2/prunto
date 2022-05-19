@@ -7,9 +7,9 @@ import loans from "./components/loans";
 import wallet from "./components/wallet";
 import utils from "./helpers/utils";
 
-const main = document.querySelector("#root");
-
-main.innerHTML = "<h1>Welcome to Prunto</h1>";
+const printHome = () => {
+  utils.writeToDom("#root", "<h1>Welcome to Prunto</h1>");
+};
 
 const initData = async () => {
   await req.getLoanRequests();
@@ -22,6 +22,11 @@ document.querySelector("#about").addEventListener("click", (e) => {
   utils.clearActiveNavlinks();
   e.target.classList.add("active");
   utils.writeToDom("#root", "<h2>About</h2>");
+});
+
+document.querySelector("#homeLink").addEventListener("click", (e) => {
+  e.preventDefault();
+  printHome();
 });
 
 document.querySelector("#wallet").addEventListener("click", async (e) => {
