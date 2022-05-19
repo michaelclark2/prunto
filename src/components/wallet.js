@@ -11,6 +11,7 @@ let contract;
 const getContract = () => contract;
 const getKit = () => kit;
 
+// todo: handle disconnect and change address
 const connectWallet = async (callback) => {
   if (window.celo) {
     try {
