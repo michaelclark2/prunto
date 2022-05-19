@@ -1,5 +1,7 @@
 # Prunto
 
+View dApp: https://fabulous-basbousa-dab8cb.netlify.app/
+
 ## Description
 
 A dApp built on [Celo](https://www.celo.org) to send requests for money to your friends that you intend to pay back later.
