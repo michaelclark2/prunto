@@ -47,3 +47,5 @@ View dApp: https://fabulous-basbousa-dab8cb.netlify.app/
 
 - Add the ability for lenders to charge interest
 - Request other tokens as payments
+- View sent requests
+- Lenders are able to see all current loans
