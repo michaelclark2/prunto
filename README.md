@@ -1,14 +1,18 @@
 # Prunto
 
-View dApp: https://fabulous-basbousa-dab8cb.netlify.app/
-
 ## Description
 
-A dApp built on [Celo](https://www.celo.org) to send requests for money to your friends that you intend to pay back later.
+Prunto is a payment request and reimbursement platform built on [Celo](https://www.celo.org).
 
-The lender can request the borrower pay an interest rate, or to pay the loan back interest-free.
+A user can send request payments from any address that they intend to reimburse.
 
-A borrower can only have one active loan.
+The lender can accept or deny a request.
+
+If the lender accepts a payment request, a loan is created to keep track of reimbursement.
+
+A borrower can only have one active loan at any given time, and is unable to make further payment requests until their loan balance is 0.
+
+View dApp: https://fabulous-basbousa-dab8cb.netlify.app/
 
 ## Usage
 
@@ -16,7 +20,6 @@ A borrower can only have one active loan.
 
 - [Google Chrome](https://www.google.com/chrome)
 - [Celo Wallet Extension](https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh)
-- [Node 16+](https://nodejs.org/en/download/)
 
 ### Setup Test Wallet
 
@@ -39,3 +42,8 @@ A borrower can only have one active loan.
 - Build frontend and start webpack-dev-server
 
   `npm start`
+
+## Future developments
+
+- Add the ability for lenders to charge interest
+- Request other tokens as payments
