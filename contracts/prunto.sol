@@ -50,24 +50,36 @@ contract Prunto {
         // start_timestamp
     }
 
+    event sendRequestEvent(address indexed _to, uint256 _amount, string _message);
+    event acceptRequestEvent(address indexed _from, uint256 _amount, string _message);
+    event denyRequestEvent(address indexed _from, string _message);
+
+    // request for loan from @_target
     function sendRequest(
         address _target,
         uint256 _amount,
         string memory _memo
     ) public {
+        // users cannot make request to themselves
+        require(msg.sender != _target, "You cannot make a request to yourself");
         requests[_target].push(
             Request(payable(msg.sender), _amount, _memo, false, false)
         );
+
+        emit sendRequestEvent(_target, _amount, "You successfully sent a new request");
     }
 
+    // return count of all request made to current user
     function getRequestsLength() public view returns (uint256) {
         return requests[msg.sender].length;
     }
 
+    // get request made to current user at index @_id
     function getRequest(uint256 _id) public view returns (Request memory) {
         return requests[msg.sender][_id];
     }
 
+    // accept request at index @_id and create a loan
     function acceptRequest(uint256 _id) public payable {
         Request storage request = requests[msg.sender][_id];
         require(!request.accepted, "Request is already accepted.");
@@ -90,20 +102,40 @@ contract Prunto {
             request.amount,
             request.amount
         );
-        request.accepted = true;
+        request.accepted = true;   
+
+        emit acceptRequestEvent(request.requester, request.amount, "You successfully accepted a new request");
+
+        // delete request after accepting
+        deleteRequest(_id);
     }
 
+    // deny request at index @_id
     function denyRequest(uint256 _id) public {
         Request storage req = requests[msg.sender][_id];
         require(!req.accepted, "Request is already accepted.");
         require(!req.denied, "Request is already denied.");
         req.denied = true;
+
+        emit denyRequestEvent(req.requester, "You successfully denied a new request");
+
+        // delete Request after denying
+        deleteRequest(_id);
     }
 
+    // delete request after accepting or rejecting
+    function deleteRequest(uint256 _id) public {
+        // replace the Request to delete with the last item in array
+        requests[msg.sender][_id] = requests[msg.sender][requests[msg.sender].length - 1];
+        requests[msg.sender].pop(); // delete the last item in the user's request list
+    }
+
+    // return current user's active loan
     function getLoan() public view returns (Loan memory) {
         return loans[msg.sender];
     }
 
+    // make part or full payment for an active loan
     function makePayment(uint256 _amount) public payable {
         require(loans[msg.sender].issuer != address(0), "No active loan.");
 
@@ -126,6 +158,7 @@ contract Prunto {
         }
     }
 
+    // make full payment for an active loan
     function payRemainingBalance() public payable {
         require(loans[msg.sender].issuer != address(0), "No active loan.");
         require(loans[msg.sender].balance > 0, "No remaining balance.");
