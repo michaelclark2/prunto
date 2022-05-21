@@ -6,7 +6,7 @@ import wallet from "./wallet";
 
 let requests = [];
 
-const getLoanRequestsLength = () => requests.length;
+const getLoanRequestsLength = () => requests.filter((r) => !r.accepted && !r.denied).length;
 
 const getLoanRequests = async () => {
   const contract = wallet.getContract();
