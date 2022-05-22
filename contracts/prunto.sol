@@ -55,6 +55,7 @@ contract Prunto {
         uint256 _amount,
         string memory _memo
     ) public {
+        require(msg.sender != _target, "Cannot send request to self.");
         requests[_target].push(
             Request(payable(msg.sender), _amount, _memo, false, false)
         );
